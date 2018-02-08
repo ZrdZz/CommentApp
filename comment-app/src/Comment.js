@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 class Comment extends Component{
 	render(){
@@ -11,6 +12,10 @@ class Comment extends Component{
 			</div>
 		)
 	}
+}
+
+Comment.propTypes = {
+	comment: PropTypes.object
 }
 
 export default Comment

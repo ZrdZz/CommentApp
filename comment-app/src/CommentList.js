@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Comment from './Comment';
+import PropTypes from 'prop-types';
 
 class CommentList extends Component{
 	render(){
@@ -13,6 +14,10 @@ class CommentList extends Component{
 
 CommentList.defaultProps = {
 	comments: []
+}
+
+CommentList.propTypes = {
+	comments: PropTypes.array
 }
 
 export default CommentList
