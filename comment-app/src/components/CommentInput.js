@@ -5,21 +5,8 @@ class CommentInput extends Component{
 	constructor(props){
 		super(props);
 		this.state = {
-			username: '',
+			username: props.username,
 			content: ''
-		}
-	}
-
-	_saveUsername(name){
-		localStorage.setItem('username', name);
-	}
-
-	_loadUsername(){
-		const username = localStorage.getItem('username');
-		if(username){
-			this.setState({
-				username: username
-			})
 		}
 	}
 
@@ -31,7 +18,7 @@ class CommentInput extends Component{
 		})
 	}
     
-    //将评论信息传递给父组件
+    //将评论信息传递给containers组件
 	handleSubmit(){
 		var {username, content} = this.state;
 		if(this.props.onSubmit){
@@ -40,13 +27,11 @@ class CommentInput extends Component{
 		this.setState({content: ''});
 	}
     
-    //用户名输入框失去焦点时,将值传入私有方法,保存在localStorage中
+    //用户名输入框失去焦点时,将值传入containers组件中
 	handleUsernameBlur(e){
-		this._saveUsername(e.target.value);
-	}
-
-	componentWillMount(){
-		this._loadUsername();
+		if(this.props.onUsernameBlur){
+			this.props.onUsernameBlur(e.target.value);
+		}
 	}
 
 	componentDidMount(){
@@ -79,7 +64,9 @@ class CommentInput extends Component{
 }
 
 CommentInput.propTypes = {
-	onSubmit: PropTypes.func
+	onSubmit: PropTypes.func,
+	onUsernameBlur: PropTypes.func,
+	username: PropTypes.string
 }
 
 export default CommentInput
