@@ -11,8 +11,7 @@
 ----------- CommentApp.js                                                                                                                 
 ----------- CommentInput.js                                                                                                      
 ----------- CommentList.js                                                                                                             
------- reducers                                                                                                                          
------------ comments.js                                                                                                                  
+------ reducers                                                                                                                          ----------- comments.js                                                                                                                  
 ------ index.js                                                                                                                          
 ------ index.css   
 
@@ -35,10 +34,10 @@
 
 若嵌套深的话,
 
-1. 使用context(不推荐)
+1. 使用context(不推荐)                                                                                                              
 向父组件的context中放入一些状态,这样子组件都能直接访问这个状态而不需要通过中间组件的传递。context增加了组件之间的耦合性,而且因为里面的数据能被随意
-修改,会导致程序的运行不可预料。
-例:
+修改,会导致程序的运行不可预料。                                                                                               
+例:                                                                                                                      
 ```
 class Parent extends Component{
   //在父组件中设置context
@@ -71,7 +70,12 @@ Child.contextTypes = {
 }
 ```
 
-2. 
+2. 发布订阅
+一个地方发送消息,另一个地方接受做出变化的需求,可以利用观察者模式
+```
+
+```
+3. Redux
 
 
 
