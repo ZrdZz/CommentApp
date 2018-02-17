@@ -73,9 +73,73 @@ Child.contextTypes = {
 2. 发布订阅
 一个地方发送消息,另一个地方接受做出变化的需求,可以利用观察者模式
 ```
+class EventEmitter{
+  _listeners = {}
+  
+  listen(eventName, handle){
+    var listener = this._listeners[eventName];
+    if(listener){
+      listener.push(handle);
+    }else{
+      this._listeners[eventName] = [handle];
+    }
+  }
+  
+  remove(eventName, handle){
+    var listener = this._listeners[eventName];
+    if(listener){
+      listener.filter((l) => l !== handle);
+    }
+  }
+  
+  emit(eventName, ...args){
+    var listener = this._listeners[eventName];
+    if(listener && listener.length){
+      for(let l of listener){
+        l(...args);
+      }
+    }
+  }
+}
 
+var event = new EventEmitter();
+export default event
 ```
 3. Redux
+
+Redux主要包括三部分: action、reducer、store
+
+#### action
+action是一个对象, type属性是必须的, 可以传入其他数据; 一般通过`store.dispatch()`将action传到store, 它是store数据的唯一来源
+
+#### reducer
+reducer是一个**纯函数**, 接受旧的state和action, 根据action的type返回一个新的state。
+根据业务逻辑可以分为多个reducer, 通过combineReducers将它们合并。
+注意:
+不要修改state, 应该是用`Object.assign()`新建一个副本或者使用es7的对象展开运算符`{...state, ...newState}`
+
+#### store
+store有以下职责:
+1. 提供`getState()`方法获取state
+2. 提供`dispatch(action)`方法更新state
+3. 提供`subscribe(listener)`注册监听器, 返回的函数可以注销监听器
+
+大致流程: 调用`store.dispatch()`, 将action对象传入,然后在内部会调用传入的reducer函数, 根据action的type类型, 返回一个新的state, 然后调用监听函数
+重新渲染
+
+#### React Redux
+
+react-redux提供了Provider和connect
+
+##### Provider
+Provider是一个组件, 接受store作为props, 然后将它传入context中, 这样它的子组件就能通过`this.context`获取store了
+
+##### connect
+connect是一个高阶函数, 里面定义了一个Connect组件, 被包装组件作为他的子组件, 最后返回Connect组件。
+在Connect组件中,会从context中取出store并将stateProps、dispatchProps和传给Connect的props全部传给被包装组件, 还会在componentWillMount中注册监听函数。
+这是被包装组件就可以调用传入的一些方法来通过reducer函数更新state, 监听到state发生变化, 会调用setState更新组件。
+
+
 
 
 
