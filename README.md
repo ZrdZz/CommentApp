@@ -135,9 +135,10 @@ react-redux提供了Provider和connect
 Provider是一个组件, 接受store作为props, 然后将它传入context中, 这样它的子组件就能通过`this.context`获取store了
 
 ##### connect
-connect是一个高阶函数, 里面定义了一个Connect组件, 被包装组件作为他的子组件, 最后返回Connect组件。
-在Connect组件中,会从context中取出store并将stateProps、dispatchProps和传给Connect的props全部传给被包装组件, 还会在componentWillMount中注册监听函数。
-这是被包装组件就可以调用传入的一些方法来通过reducer函数更新state, 监听到state发生变化, 会调用setState更新组件。
+connect是一个高阶函数, 里面定义了一个Connect组件, 被包装组件作为他的子组件, 最后返回Connect组件。                                            
+在Connect组件中,会从context中取出store并将stateProps、dispatchProps和传给Connect的props全部传给被包装组件, 还会在componentWillMount中注册监听
+函数
+这时被包装组件就可以调用传入的一些方法来通过reducer函数更新state, 监听到state发生变化, 会调用setState更新组件。
 
 
 
